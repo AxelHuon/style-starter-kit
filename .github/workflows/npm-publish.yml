@@ -1,10 +1,5 @@
 name: Node.js Package
 
-
-env:
-  NPM_TOKEN: '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'
-
-
 on:
   push:
     branches:
@@ -25,5 +20,5 @@ jobs:
       - name: Publish
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{env.NPM_TOKEN}}
+          NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
