@@ -1,3 +1,7 @@
+env:
+  NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+
 name: Node.js Package
 
 on:
@@ -17,5 +21,3 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Publish
         run: npm publish
-        env:
-          NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
