@@ -16,9 +16,7 @@ jobs:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build # Si votre package nécessite un script de build
+        run: yarn install
       - name: Publish
         run: npm version patch && npm publish
         env:
