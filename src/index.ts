@@ -8,3 +8,4 @@ if (args[0] === "colors") {
   initialisationColors();
 }
 
+
