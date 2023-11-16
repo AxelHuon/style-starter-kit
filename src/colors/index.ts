@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import inquirer from "inquirer";
-import { generateColorVariants } from "./variantColorsGenerator.js";
+import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
 
 
