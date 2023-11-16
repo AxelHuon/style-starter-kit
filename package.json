@@ -1,16 +1,15 @@
 {
-  "name": "theming-react-cli",
+  "name": "style-starter-kit",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "git://github.com/AxelHuon/theming-react-cli.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
   "bin": {
-    "theming-react-cli": "./dist/index.js"
+    "style-starter-kit": "./dist/index.js"
   },
   "keywords": [],
   "author": "",
