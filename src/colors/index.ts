@@ -3,12 +3,13 @@
 import inquirer from "inquirer";
 import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
-
+import config from "../config.js";
 
 interface Answers {
   useAtomicDesign: boolean;
   configureColors: boolean;
   primaryColor: string;
+  wantSecondaryColor: boolean;
   secondaryColor: string;
   blackAndWhite: boolean;
   variantColor: boolean;
@@ -21,59 +22,62 @@ export const initialisationColors= () => {
     {
       type: "confirm",
       name: "configureColors",
-      message: "Voulez-vous configurer des variables de couleurs ?",
+      message: "Do you want to configure color variables?",
     },
     {
       type: "input",
       name: "primaryColor",
-      message: "Entrez votre couleur primaire:",
+      message: "Enter your primary color:",
       validate: function (value: string) {
         const valid = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value);
         return (
           valid ||
-          "Veuillez entrer une couleur hexadécimale valide (ex: #FFFFFF)"
+          "Please enter a valid hexadecimal color (e.g., #FFFFFF)"
         );
       },
+      when: (answers: Answers) => answers.configureColors,
+    },
+    {
+      type: "confirm",
+      name: "wantSecondaryColor",
+      message: "Do you want a secondary color ?",
       when: (answers: Answers) => answers.configureColors,
     },
     {
       type: "input",
       name: "secondaryColor",
-      message: "Entrez votre couleur secondaire:",
+      message: "Enter your secondary color:",
       validate: function (value: string) {
         const valid = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value);
         return (
           valid ||
-          "Veuillez entrer une couleur hexadécimale valide (ex: #FFFFFF)"
+          "Please enter a valid hexadecimal color (e.g., #FFFFFF)"
         );
       },
-      when: (answers: Answers) => answers.configureColors,
+      when: (answers: Answers) => answers.wantSecondaryColor,
     },
     {
       type: "confirm",
       name: "blackAndWhite",
-      message: "Voulez-vous des variables de couleurs noir et blanc?",
+      message: "Do you want black and white color variables?",
       when: (answers: Answers) => answers.configureColors,
     },
-
     {
       type: "confirm",
       name: "variantColor",
-      message:
-        "Voulez vous les variantes de couleurs du plus foncés au moins foncés ?",
+      message: "Do you want color variants from darkest to lightest?",
       when: (answers: Answers) => answers.configureColors,
     },
-
     {
       type: "confirm",
       name: "generateCSS",
-      message: "Voulez-vous générer un fichier CSS avec les couleurs ?",
+      message: "Do you want to generate a CSS file with the colors?",
       when: (answers: Answers) => answers.configureColors,
     },
     {
       type: "confirm",
       name: "generateTSFile",
-      message: "Voulez-vous générer un fichier colors.ts?",
+      message: "Do you want to generate a colors.js/ts file?",
       when: (answers: Answers) => answers.configureColors,
     },
   ];
@@ -84,9 +88,13 @@ export const initialisationColors= () => {
       let colorVariablesCSS = `
           :root {
             --primary-color: ${answers.primaryColor};
-            --secondary-color: ${answers.secondaryColor};
-            
+           
         `;
+      if(answers.wantSecondaryColor){
+        colorVariablesCSS += `
+            --secondary-color: ${answers.secondaryColor};
+          `;
+      }
 
       if (answers.blackAndWhite) {
         colorVariablesCSS += `
@@ -108,16 +116,18 @@ export const initialisationColors= () => {
                   `;
           }
         }
+        if(answers.wantSecondaryColor){
         let variantColorSeondaryCSS = generateColorVariants(
           answers.secondaryColor,
           "seondary",
           "css",
         );
-        for (const key in variantColorSeondaryCSS) {
-          if (variantColorSeondaryCSS.hasOwnProperty(key)) {
-            colorVariablesCSS += `
-                    ${key}:  ${variantColorSeondaryCSS[key]};
-                  `;
+          for (const key in variantColorSeondaryCSS) {
+            if (variantColorSeondaryCSS.hasOwnProperty(key)) {
+              colorVariablesCSS += `
+                      ${key}:  ${variantColorSeondaryCSS[key]};
+                    `;
+            }
           }
         }
         if (answers.blackAndWhite) {
@@ -168,16 +178,18 @@ export const initialisationColors= () => {
                   `;
           }
         }
-        let variantColorSeondaryTS = generateColorVariants(
-          answers.secondaryColor,
-          "secondary",
-          "ts",
-        );
-        for (const key in variantColorSeondaryTS) {
-          if (variantColorSeondaryTS.hasOwnProperty(key)) {
-            colorVariablesTS += `
-                    ${key}:  "${variantColorSeondaryTS[key]}",
-                  `;
+        if (answers.wantSecondaryColor){
+          let variantColorSeondaryTS = generateColorVariants(
+            answers.secondaryColor,
+            "secondary",
+            "ts",
+          );
+          for (const key in variantColorSeondaryTS) {
+            if (variantColorSeondaryTS.hasOwnProperty(key)) {
+              colorVariablesTS += `
+                      ${key}:  "${variantColorSeondaryTS[key]}",
+                    `;
+            }
           }
         }
         if (answers.blackAndWhite) {
@@ -196,10 +208,12 @@ export const initialisationColors= () => {
         }
       }
       colorVariablesTS += `}`;
-      shell.ShellString(colorVariablesTS).to("src/theme/Colors.ts");
-      console.log(
-        "Variables de couleurs enregistrées dans src/theme/colors.ts",
-      );
+
+      if(config.language === "TypeScript"){
+        shell.ShellString(colorVariablesTS).to("src/theme/Colors.ts");
+      }else if (config.language === "JavaScript"){
+        shell.ShellString(colorVariablesTS).to("src/theme/Colors.js");
+      }
     }
   });
 };

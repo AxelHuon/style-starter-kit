@@ -6,3 +6,4 @@ dist
 src/Atoms
 src/Molecules
 src/theme
+src/colors.css
