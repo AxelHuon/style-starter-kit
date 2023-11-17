@@ -22,3 +22,9 @@ npm i style-starter-kit
 ```bash
 style-starter-kit init
 ```
+
+
+## Generate Colors
+```bash
+style-starter-kit colors
+```
