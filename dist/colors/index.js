@@ -112,11 +112,11 @@ export const initialisationColors = () => {
                 }
             }
             colorVariablesCSS += `}`;
-            shell.ShellString(colorVariablesCSS).to("src/colors.css");
-            console.log("Variables de couleurs enregistrées dans src/colors.css");
+            shell.ShellString(colorVariablesCSS).to("lib/colors.css");
+            console.log("Variables de couleurs enregistrées dans lib/colors.css");
         }
         if (answers.generateTSFile) {
-            shell.mkdir("-p", "src/theme");
+            shell.mkdir("-p", "lib/theme");
             let colorVariablesTS = `
           export const Colors = {
             PRIMARY: "${answers.primaryColor}",
@@ -161,10 +161,10 @@ export const initialisationColors = () => {
             }
             colorVariablesTS += `}`;
             if (config.language === "TypeScript") {
-                shell.ShellString(colorVariablesTS).to("src/theme/Colors.ts");
+                shell.ShellString(colorVariablesTS).to("lib/theme/Colors.ts");
             }
             else if (config.language === "JavaScript") {
-                shell.ShellString(colorVariablesTS).to("src/theme/Colors.js");
+                shell.ShellString(colorVariablesTS).to("lib/theme/Colors.js");
             }
         }
     });
