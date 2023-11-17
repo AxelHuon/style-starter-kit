@@ -2,7 +2,7 @@ node_modules
 .idea
 
 
-src/Atoms
-src/Molecules
-src/theme
-src/colors.css
+lib/Atoms
+lib/Molecules
+lib/theme
+lib/colors.css
