@@ -1,24 +1,52 @@
-name: npm-publish
+name: Node.js Package
+
 on:
   push:
     branches:
-      - master # Change this to your default branch
+      - master
+
 jobs:
-  npm-publish:
-    name: npm-publish
+  publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          node-version: '14' # Spécifiez la version de Node.js que vous utilisez
+          node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
+
       - name: Install dependencies
         run: npm install
-      - name: Publish to npm
+
+      - name: Check for 'Release' in commit message
+        id: check_release
+        run: |
+          if git log -1 --pretty=%B | grep -q 'Release'; then
+            echo "Release found in commit message"
+            echo "::set-output name=release::true"
+          else
+            echo "Release not found in commit message"
+            echo "::set-output name=release::false"
+          fi
+
+      - name: Check if version is higher than npm
+        id: check_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm view $(node -p "require('./package.json').name") version)
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "Current version is higher than npm version"
+            echo "::set-output name=version_higher::true"
+          else
+            echo "Current version is not higher than npm version"
+            echo "::set-output name=version_higher::false"
+          fi
+
+      - name: Publish
+        if: steps.check_release.outputs.release == 'true' && steps.check_version.outputs.version_higher == 'true'
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+          NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
