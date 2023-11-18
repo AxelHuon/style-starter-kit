@@ -3,7 +3,7 @@
 import inquirer from "inquirer";
 import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
-import config from "../config.js";
+import config from "../style-starter-kit.config.js";
 
 interface Answers {
   useAtomicDesign: boolean;
