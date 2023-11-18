@@ -2,7 +2,7 @@
 import inquirer from "inquirer";
 import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
-import config from "../style-starter-kit.config.js";
+import config from "lib/style-starter-kit.config.ts";
 export const initialisationColors = () => {
     const questions = [
         {
@@ -160,10 +160,10 @@ export const initialisationColors = () => {
                 }
             }
             colorVariablesTS += `}`;
-            if (config.language === "TypeScript") {
+            if ((config === null || config === void 0 ? void 0 : config.language) === "TypeScript") {
                 shell.ShellString(colorVariablesTS).to("lib/theme/Colors.ts");
             }
-            else if (config.language === "JavaScript") {
+            else if ((config === null || config === void 0 ? void 0 : config.language) === "JavaScript") {
                 shell.ShellString(colorVariablesTS).to("lib/theme/Colors.js");
             }
         }
