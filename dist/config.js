@@ -1,5 +1,5 @@
 export default {
-    framework: 'nextjs',
+    framework: 'unknow',
     language: 'TypeScript',
     styleLib: 'styled-components',
 };
