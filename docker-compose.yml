@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  style-starter-kit:
+    build: .
+    container_name: style_starter_kit_container
+    ports:
+      - "3000:3000" # Remplacez par les ports que vous utilisez
+    volumes:
+      - .:/usr/src/style-starter-kit # Montez le répertoire de travail actuel dans le conteneur
+    working_dir: /usr/src/style-starter-kit
+    stdin_open: true
+    tty: true
+    command: ./start.sh

@@ -5,9 +5,6 @@ FROM node:20
 RUN npm install -g typescript
 
 
-RUN apt-get update && apt-get install -y tmux
-
-
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /usr/src/style-starter-kit
 
@@ -25,7 +22,4 @@ RUN npm install -g .
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
-CMD ["/start.sh"]
-
-
-
+CMD ["npm", "start"]

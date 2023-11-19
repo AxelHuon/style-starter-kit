@@ -21,4 +21,3 @@ if (args[0] === "init" && args.length<=1) {
 }else{
   console.log("command not found");
 }
-
