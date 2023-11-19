@@ -11,4 +11,4 @@ services:
     working_dir: /usr/src/style-starter-kit
     stdin_open: true
     tty: true
-    command: ./start.sh
+    command: ["sh", "-c", "npm install && npm start"]

@@ -6,4 +6,3 @@ Dockerfile
 tsconfig.json
 docker-compose.yml
 nodemon.json
-start.sh
