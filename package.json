@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AxelHuon/style-starter-kit"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +25,6 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "g": "^2.0.1",
     "inquirer": "^9.2.11",
     "shelljs": "^0.8.5",
     "undici": "^5.27.0"
