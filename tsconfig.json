@@ -4,6 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "declaration": true,
+    "rootDir": "./lib",
     "outDir": "./dist",
     "strict": true,
     "baseUrl": ".",

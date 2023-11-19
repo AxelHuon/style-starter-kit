@@ -1,6 +1,5 @@
-
-export default  {
-    framework: 'unknow',
-    language: 'TypeScript',
-    styleLib: 'styled-components',
-}
+export default {
+  framework: 'unknow',
+  language: 'TypeScript',
+  styleLib: 'css-modules',
+};

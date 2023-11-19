@@ -3,8 +3,8 @@
 import inquirer from "inquirer";
 import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
-import config from "../style-starter-kit.config.js";
-
+import config from "../style-starter-kit.config.js"
+import {createDirectoryIfNeeded} from "../utils/folder.js";
 interface Answers {
   useAtomicDesign: boolean;
   configureColors: boolean;
@@ -147,8 +147,8 @@ export const initialisationColors= () => {
       }
 
       colorVariablesCSS += `}`;
-      shell.ShellString(colorVariablesCSS).to("lib/colors.css");
-      console.log("Variables de couleurs enregistrées dans lib/colors.css");
+      createDirectoryIfNeeded(process.cwd() + "/style");
+      shell.ShellString(colorVariablesCSS).to(process.cwd() + "/style/colors.css");
     }
 
     if (answers.generateTSFile) {
@@ -208,12 +208,9 @@ export const initialisationColors= () => {
         }
       }
       colorVariablesTS += `}`;
-
-      if(config.language === "TypeScript"){
-        shell.ShellString(colorVariablesTS).to("lib/theme/Colors.ts");
-      }else if (config.language === "JavaScript"){
-        shell.ShellString(colorVariablesTS).to("lib/theme/Colors.js");
-      }
+      createDirectoryIfNeeded(process.cwd() + "/theme");
+      let outputPath = config.language === "TypeScript" ? "./theme/Colors.ts" : "./theme/Colors.js";
+      shell.ShellString(colorVariablesTS).to(process.cwd() + "/" + outputPath);
     }
   });
 };
