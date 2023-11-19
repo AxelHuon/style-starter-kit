@@ -23,9 +23,8 @@ COPY . .
 # Installer votre CLI globalement
 RUN npm install -g .
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY start_tmux.sh /start.sh
+COPY start_tmux.sh /start_tmux.sh
+RUN chmod +x /start_tmux.sh /start_tmux.sh
 CMD ["/start.sh"]
-
-
 
