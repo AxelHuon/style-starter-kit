@@ -36,5 +36,11 @@ docker build -t style-starter-kit .
 ```
 
 ```bash
-docker run -it -v /Users/axelhuon/lab/Cours/style-starter-kit:/usr/src/style-starter-kit style-starter-kit
+docker-compose up
+```
+
+### Launch bin/bash terminal
+
+```bash
+docker exec -it <name_container> /bin/bash
 ```
