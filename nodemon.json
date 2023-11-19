@@ -1,5 +1,13 @@
 {
   "watch": ["lib"],
   "ext": "ts",
-  "exec": "tsc"
+  "ignore": [],
+  "execMap": {
+    "ts": "node --loader ts-node/esm.mjs"
+  },
+  "execArgs": ["--files", "--dir=dist", "lib/index.ts"],
+  "events": {
+    "restart": "echo 'Le serveur Node.js a redémarré en raison de modifications.'",
+    "crash": "rimraf dist/*"
+  }
 }

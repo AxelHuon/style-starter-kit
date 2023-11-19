@@ -20,6 +20,7 @@ interface Answers {
 
 
 
+
 export const initialisationColors= async () => {
 
   const config = await loadConfig("colors");
@@ -31,6 +32,7 @@ export const initialisationColors= async () => {
         message: "Do you want to configure color variables?",
       },
       {
+
         type: "input",
         name: "primaryColor",
         message: "Enter your primary color:",
