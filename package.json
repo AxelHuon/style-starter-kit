@@ -9,7 +9,8 @@
     "url": "https://github.com/AxelHuon/style-starter-kit"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon"
   },
   "type": "module",
   "bin": {
@@ -22,6 +23,7 @@
     "@types/inquirer": "^9.0.6",
     "@types/node": "^20.8.9",
     "@types/shelljs": "^0.8.14",
+    "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {

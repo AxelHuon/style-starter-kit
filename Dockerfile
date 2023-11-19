@@ -1,9 +1,12 @@
 # Utiliser une image Node.js officielle comme image de base
 FROM node:20
 
-
 #Install typescript
 RUN npm install -g typescript
+
+
+RUN apt-get update && apt-get install -y tmux
+
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /usr/src/style-starter-kit
@@ -20,5 +23,9 @@ COPY . .
 # Installer votre CLI globalement
 RUN npm install -g .
 
-# La commande par défaut peut être un shell, pour une interaction manuelle avec le CLI
-CMD [ "/bin/bash" ]
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
+
+
+

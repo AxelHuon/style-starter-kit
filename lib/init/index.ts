@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { writeConfigFile } from "../utils/writeConfigFile.js";
 import inquirer from "inquirer";
-import { execSync } from "child_process";
 import { installLibrary } from "../utils/libInstall.js";
+import {writeConfigFile} from "../utils/configFile.js";
 
 
 const  detectFramework = ():string =>  {
@@ -53,7 +52,7 @@ function askLibStyle():Promise<{ libStyleChoice:string}> {
 }
 
 
-export const initLib = async ()=>{
+export const initLib = async ():Promise<boolean> =>{
 
   const frameworkValue:string = detectFramework()
   writeConfigFile("framework",frameworkValue)
@@ -67,4 +66,6 @@ export const initLib = async ()=>{
   if(styleLib.libStyleChoice === "styled-components") {
     installLibrary("styled-components")
   }
+  return true
+
 }
