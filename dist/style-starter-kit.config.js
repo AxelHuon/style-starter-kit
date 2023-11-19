@@ -1,5 +1,5 @@
 export default {
     framework: 'unknow',
     language: 'TypeScript',
-    styleLib: 'styled-components',
+    styleLib: 'css-modules',
 };

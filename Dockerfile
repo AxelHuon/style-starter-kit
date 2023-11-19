@@ -1,6 +1,10 @@
 # Utiliser une image Node.js officielle comme image de base
 FROM node:20
 
+
+#Install typescript
+RUN npm install -g typescript
+
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /usr/src/style-starter-kit
 
