@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-export declare const initialisationColors: () => void;
+export declare const initialisationColors: () => Promise<void>;

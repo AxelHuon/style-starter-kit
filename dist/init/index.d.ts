@@ -1,1 +1,1 @@
-export declare const initLib: () => Promise<void>;
+export declare const initLib: () => Promise<boolean>;

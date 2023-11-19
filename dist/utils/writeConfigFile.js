@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 export const writeConfigFile = (key, value) => {
-    const configPath = path.join(process.cwd(), './', 'style-starter-kit.config.ts');
+    const configPath = path.join(process.cwd(), './', 'style-starter-kit.config.js');
     if (fs.existsSync(configPath)) {
         let configContent = fs.readFileSync(configPath, { encoding: 'utf8' });
         const regex = new RegExp(`${key}: '.*'`, 'g');

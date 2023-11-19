@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import fs from 'fs';
 import path from 'path';
-import { writeConfigFile } from "../utils/writeConfigFile.js";
 import inquirer from "inquirer";
 import { installLibrary } from "../utils/libInstall.js";
+import { writeConfigFile } from "../utils/configFile.js";
 const detectFramework = () => {
     // Vérifier pour Next.js
     if (fs.existsSync(path.join(process.cwd(), 'pages')) && fs.existsSync(path.join(process.cwd(), 'next.config.js')) || fs.existsSync(path.join(process.cwd(), 'next.config.ts'))) {
@@ -61,4 +61,5 @@ export const initLib = () => __awaiter(void 0, void 0, void 0, function* () {
     if (styleLib.libStyleChoice === "styled-components") {
         installLibrary("styled-components");
     }
+    return true;
 });
