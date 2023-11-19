@@ -28,8 +28,6 @@ style-starter-kit init
 style-starter-kit colors
 ```
 
-
-
 ## For contributors
 ### Install Docker image
 
