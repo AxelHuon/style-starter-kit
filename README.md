@@ -16,7 +16,6 @@ The library is designed to rapidly create classic design systems for small-scale
 npm i style-starter-kit
 ```
 
-
 ## Init projects
 
 ```bash
@@ -27,4 +26,17 @@ style-starter-kit init
 ## Generate Colors
 ```bash
 style-starter-kit colors
+```
+
+
+
+## For contributors
+### Install Docker image
+
+```bash
+docker build -t style-starter-kit .
+```
+
+```bash
+docker run -it -v /Users/axelhuon/lab/Cours/style-starter-kit:/usr/src/style-starter-kit style-starter-kit
 ```
