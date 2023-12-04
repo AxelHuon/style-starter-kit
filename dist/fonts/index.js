@@ -57,7 +57,15 @@ function downloadFontFamily(fontFamily) {
                         const weight = weightMatch[1];
                         const style = styleMatch[1];
                         const fileExtension = path.extname(url);
-                        const fontDirectory = path.join("./public/fonts", fontFamily);
+                        let fontDirectory = "";
+                        if (config !== 404 && typeof config === "object" && config !== null) {
+                            if ((config === null || config === void 0 ? void 0 : config.framework) === "react" || "vue" || "unknow") {
+                                fontDirectory = path.join("./public/fonts", fontFamily);
+                            }
+                            else {
+                                fontDirectory = path.join("./public/fonts", fontFamily);
+                            }
+                        }
                         if (!fs.existsSync(fontDirectory)) {
                             fs.mkdirSync(fontDirectory, { recursive: true });
                         }
