@@ -1,6 +1,6 @@
 node_modules
 .idea
-
+.code
 
 lib/Atoms
 lib/Molecules
@@ -8,3 +8,4 @@ lib/theme
 lib/colors.css
 style
 theme
+public
