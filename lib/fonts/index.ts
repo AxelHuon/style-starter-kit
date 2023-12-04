@@ -62,11 +62,17 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
           const weight: string = weightMatch[1];
           const style: string = styleMatch[1];
           const fileExtension: string = path.extname(url);
-          const fontDirectory: string = path.join("./public/fonts", fontFamily);
-          if (!fs.existsSync(fontDirectory)) {
-            fs.mkdirSync(fontDirectory, { recursive: true });
+          let fontDirectory:string = ""
+          if (config !== 404 && typeof config === "object" && config!==null) {
+            if (config?.framework === "react" || "vue" || "unknow"){
+              fontDirectory = path.join("./public/fonts", fontFamily);
+            }else{
+              fontDirectory = path.join("./public/fonts", fontFamily);
+            }
           }
-
+          if (!fs.existsSync(fontDirectory)) {
+            fs.mkdirSync(fontDirectory, {recursive: true});
+          }
           const fileName: string = `${fontFamily}_${style}_${weight}`;
 
           let newUrl: string = path.join(fontDirectory, fileName);
