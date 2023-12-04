@@ -28,6 +28,14 @@ style-starter-kit init
 style-starter-kit colors
 ```
 
+
+## Download Fonts
+```bash
+style-starter-kit fonts
+```
+
+
+
 ## For contributors
 ### Install Docker image
 
