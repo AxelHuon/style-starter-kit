@@ -2,12 +2,15 @@ import inquirer from "inquirer";
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
+import {createDirectoryIfNeeded} from "../utils/folder.js";
+import {loadConfig} from "../utils/configFile.js";
+
+
 
 const FONTS: string[] = [
   "Roboto",
   "Open Sans",
   "Lato",
-  // ... ajoutez d'autres polices si vous souhaitez les supporter
 ];
 
 async function selectFont(): Promise<string> {
@@ -25,6 +28,10 @@ async function selectFont(): Promise<string> {
 }
 
 async function downloadFontFamily(fontFamily: string): Promise<void> {
+
+  const config = await loadConfig("colors");
+
+
   const fontUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(
     fontFamily
   )}:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap`;
@@ -55,7 +62,6 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
           const weight: string = weightMatch[1];
           const style: string = styleMatch[1];
           const fileExtension: string = path.extname(url);
-
           const fontDirectory: string = path.join("./public/fonts", fontFamily);
           if (!fs.existsSync(fontDirectory)) {
             fs.mkdirSync(fontDirectory, { recursive: true });
@@ -72,13 +78,30 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
           console.log(newFontCss);
         }
       }
-      const fontsCssPath: string = "./src/styles/fonts.css";
-      const existingContent: string = fs.readFileSync(fontsCssPath, "utf8");
-      fs.writeFileSync(fontsCssPath, newFontCss + existingContent);
+      let fontsCssPath = ""
+      if (config !== 404 && typeof config === "object" && config!==null) {
+        if (config?.framework === "react" || "vue" || "unknow"){
+          createDirectoryIfNeeded("src")
+          createDirectoryIfNeeded("src/styles")
+          fontsCssPath = "./src/styles/fonts.css";
+        }else{
+          createDirectoryIfNeeded("./styles")
+          fontsCssPath = "./styles/fonts.css";
+        }
+      }
+      fs.access(fontsCssPath, fs.constants.F_OK, (err) => {
+        if (err) {
+          console.log('Le fichier n\'existe pas. Création en cours...');
+          fs.writeFile(fontsCssPath, newFontCss, (err) => {
+            if (err) throw err;
+            console.log('Le fichier a été créé !');
+          });
+        } else {
+          const existingContent: string = fs.readFileSync(fontsCssPath, "utf8");
+          fs.writeFileSync(fontsCssPath, newFontCss + existingContent);
+        }
+      });
 
-      console.log(
-        `Le CSS de la police a été ajouté au début de ${fontsCssPath}`
-      );
       console.log(`La police ${fontFamily} a été téléchargée avec succès.`);
     } else {
       throw new Error("Aucune URL de police trouvée dans le CSS fourni.");
@@ -111,7 +134,7 @@ async function downloadFontFile(url: string, directory: string, fileName: string
   }
 }
 
-async function initializeLibrary(): Promise<void> {
+export async function initializeFontsDownload(): Promise<void> {
   try {
     const selectedFont: string = await selectFont();
     console.log(`Vous avez choisi de télécharger la police : ${selectedFont}`);
@@ -121,4 +144,3 @@ async function initializeLibrary(): Promise<void> {
   }
 }
 
-initializeLibrary();
