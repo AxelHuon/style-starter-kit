@@ -28,6 +28,14 @@ style-starter-kit init
 style-starter-kit colors
 ```
 
+
+## Download Fonts
+```bash
+style-starter-kit fonts
+```
+
+
+
 ## For contributors
 ### Install Docker image
 
@@ -36,5 +44,11 @@ docker build -t style-starter-kit .
 ```
 
 ```bash
-docker run -it -v /Users/axelhuon/lab/Cours/style-starter-kit:/usr/src/style-starter-kit style-starter-kit
+docker-compose up
+```
+
+### Launch bin/bash terminal
+
+```bash
+docker exec -it <name_container> /bin/bash
 ```
