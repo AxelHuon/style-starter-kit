@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { initialisationColors } from "./colors/index.js";
 import { initLib } from "./init/index.js";
 import { loadConfig } from "./utils/configFile.js";
+import { initializeFontsDownload } from "./fonts/index.js";
 const args = process.argv.slice(2);
 const configFunction = () => __awaiter(void 0, void 0, void 0, function* () {
     const configFile = yield loadConfig();
@@ -21,6 +22,9 @@ if (args[0] === "init" && args.length <= 1) {
 }
 else if (args[0] === "colors" && args.length <= 1) {
     initialisationColors();
+}
+else if (args[0] === "fonts" && args.length <= 1) {
+    initializeFontsDownload();
 }
 else {
     console.log("command not found");
