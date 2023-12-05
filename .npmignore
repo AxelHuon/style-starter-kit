@@ -7,3 +7,4 @@ tsconfig.json
 nodemon.json
 docker-compose.yml
 start.sh
+style-starter-kit.config.json
