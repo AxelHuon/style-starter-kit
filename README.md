@@ -29,12 +29,16 @@ style-starter-kit colors
 ```
 
 ## For contributors
-### Install Docker image
+### Use Docker
 
 ```bash
 docker build -t style-starter-kit .
 ```
 
 ```bash
-docker run -it -v /Users/axelhuon/lab/Cours/style-starter-kit:/usr/src/style-starter-kit style-starter-kit
+docker compose up
+```
+
+```bash
+docker exec -it style-starter-kit /bin/bash
 ```

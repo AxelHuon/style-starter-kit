@@ -8,3 +8,6 @@ lib/theme
 lib/colors.css
 style
 theme
+public
+src
+style-starter-kit.config.json
