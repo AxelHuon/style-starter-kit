@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import path from "path";
 export function loadConfig() {
     return __awaiter(this, void 0, void 0, function* () {
-        const configPath = path.join(process.cwd(), 'style-starter-kit.config.js');
+        const configPath = path.join(process.cwd(), 'style-starter-kit.config.json');
         try {
             const config = yield import(configPath);
             return config;

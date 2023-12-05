@@ -14,7 +14,7 @@ import shell from "shelljs";
 import { createDirectoryIfNeeded } from "../utils/folder.js";
 import { loadConfig } from "../utils/configFile.js";
 export const initialisationColors = () => __awaiter(void 0, void 0, void 0, function* () {
-    const config = yield loadConfig();
+    const config = loadConfig();
     if (config !== 404 && typeof config === "object" && config !== null) {
         const questions = [
             {

@@ -1,44 +1,29 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import fs from 'fs';
 import path from 'path';
 import * as process from "process";
 export const writeConfigFile = (key, value) => {
-    const configPath = path.join(process.cwd(), './', 'style-starter-kit.config.js');
+    const configPath = path.join(process.cwd(), './', 'style-starter-kit.config.json');
+    let configObject;
     if (fs.existsSync(configPath)) {
-        let configContent = fs.readFileSync(configPath, { encoding: 'utf8' });
-        const regex = new RegExp(`${key}: '.*'`, 'g');
-        if (regex.test(configContent)) {
-            configContent = configContent.replace(regex, `${key}: '${value}'`);
-        }
-        else {
-            configContent = configContent.replace(/};\s*$/, `  ${key}: '${value}',\n};\n`);
-        }
-        fs.writeFileSync(configPath, configContent, { encoding: 'utf8' });
+        const configContent = fs.readFileSync(configPath, { encoding: 'utf8' });
+        configObject = JSON.parse(configContent);
     }
     else {
-        const initialConfigContent = `export default {\n  ${key}: '${value}',\n};\n`;
-        fs.writeFileSync(configPath, initialConfigContent, { encoding: 'utf8' });
+        configObject = {};
         console.log("Le fichier de configuration a été créé.");
     }
+    configObject[key] = value;
+    const newConfigContent = JSON.stringify(configObject, null, 2);
+    fs.writeFileSync(configPath, newConfigContent, { encoding: 'utf8' });
 };
 export function loadConfig() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const configPath = path.join(process.cwd(), 'style-starter-kit.config.js');
-        try {
-            const module = yield import(configPath);
-            return module.default;
-        }
-        catch (error) {
-            console.log("Be carreful to launch style-starter-kit init before others commands");
-            return 404;
-        }
-    });
+    const configPath = path.join(process.cwd(), "style-starter-kit.config.json");
+    if (fs.existsSync(configPath)) {
+        const configFile = fs.readFileSync(configPath, 'utf8');
+        return JSON.parse(configFile);
+    }
+    else {
+        console.log("Be careful to launch style-starter-kit init before others commands");
+        return 404;
+    }
 }

@@ -22,7 +22,7 @@ interface Answers {
 
 export const initialisationColors= async () => {
 
-  const config = await loadConfig();
+  const config = loadConfig();
   if (config !== 404 && typeof config === "object" && config!==null) {
     const questions = [
       {
