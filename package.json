@@ -1,6 +1,6 @@
 {
   "name": "style-starter-kit",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/inquirer": "^9.0.6",
     "@types/node": "^20.8.9",
