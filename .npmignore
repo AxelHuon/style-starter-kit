@@ -4,3 +4,6 @@ Dockerfile
 .dockerignore
 .github
 tsconfig.json
+nodemon.json
+docker-compose.yml
+start.sh
