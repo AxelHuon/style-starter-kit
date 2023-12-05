@@ -4,4 +4,4 @@ export interface ConfigInterface {
     styleLib?: string;
 }
 export declare const writeConfigFile: (key: string, value: string) => void;
-export declare function loadConfig(command?: string): Promise<ConfigInterface | number>;
+export declare function loadConfig(): Promise<ConfigInterface | number>;

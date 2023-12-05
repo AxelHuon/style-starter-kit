@@ -10,8 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import fs from 'fs';
 import path from 'path';
 import * as process from "process";
-import { initLib } from "../init/index.js";
-import { initialisationColors } from "../colors/index.js";
 export const writeConfigFile = (key, value) => {
     const configPath = path.join(process.cwd(), './', 'style-starter-kit.config.js');
     if (fs.existsSync(configPath)) {
@@ -31,7 +29,7 @@ export const writeConfigFile = (key, value) => {
         console.log("Le fichier de configuration a été créé.");
     }
 };
-export function loadConfig(command) {
+export function loadConfig() {
     return __awaiter(this, void 0, void 0, function* () {
         const configPath = path.join(process.cwd(), 'style-starter-kit.config.js');
         try {
@@ -39,12 +37,7 @@ export function loadConfig(command) {
             return module.default;
         }
         catch (error) {
-            const responseInitLib = yield initLib();
-            if (responseInitLib) {
-                if (command === "colors") {
-                    initialisationColors();
-                }
-            }
+            console.log("Be carreful to launch style-starter-kit init before others commands");
             return 404;
         }
     });

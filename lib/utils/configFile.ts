@@ -29,18 +29,13 @@ export const writeConfigFile = (key:string, value:string) =>{
   }
 }
 
-export async function loadConfig(command?:string): Promise<ConfigInterface | number> {
+export async function loadConfig(): Promise<ConfigInterface | number> {
   const configPath = path.join(process.cwd(), 'style-starter-kit.config.js');
   try {
     const module = await import(configPath);
     return module.default
   } catch (error) {
-    const responseInitLib =  await initLib()
-    if (responseInitLib){
-      if (command === "colors"){
-        initialisationColors()
-      }
-    }
+    console.log("Be carreful to launch style-starter-kit init before others commands")
     return 404
   }
 }

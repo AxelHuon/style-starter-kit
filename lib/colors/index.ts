@@ -4,7 +4,7 @@ import inquirer from "inquirer";
 import { generateColorVariants } from "../utils/variantColorsGenerator.js";
 import shell from "shelljs";
 import {createDirectoryIfNeeded} from "../utils/folder.js";
-import {ConfigInterface, loadConfig} from "../utils/configFile.js";
+import {loadConfig} from "../utils/configFile.js";
 interface Answers {
   useAtomicDesign: boolean;
   configureColors: boolean;
@@ -22,7 +22,7 @@ interface Answers {
 
 export const initialisationColors= async () => {
 
-  const config = await loadConfig("colors");
+  const config = await loadConfig();
   if (config !== 404 && typeof config === "object" && config!==null) {
     const questions = [
       {
