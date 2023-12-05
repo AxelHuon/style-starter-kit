@@ -20,6 +20,4 @@ COPY . .
 # Installer votre CLI globalement
 RUN npm install -g .
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
 CMD ["npm", "start"]

@@ -4,3 +4,5 @@ Dockerfile
 .dockerignore
 .github
 tsconfig.json
+docker-compose.yml
+nodemon.json
