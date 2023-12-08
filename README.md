@@ -40,5 +40,7 @@ docker compose up
 ```
 
 ```bash
-docker exec -it style-starter-kit /bin/bash
+docker exec -it style_starter_kit_container /bin/bash 
 ```
+
+

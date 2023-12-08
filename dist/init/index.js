@@ -9,27 +9,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import fs from 'fs';
 import path from 'path';
-import inquirer from "inquirer";
-import { installLibrary } from "../utils/libInstall.js";
-import { writeConfigFile } from "../utils/configFile.js";
+import inquirer from 'inquirer';
+import { installLibrary } from '../utils/libInstall.js';
+import { writeConfigFile } from '../utils/configFile.js';
 const detectFramework = () => {
     // Vérifier pour Next.js
-    if (fs.existsSync(path.join(process.cwd(), 'pages')) && fs.existsSync(path.join(process.cwd(), 'next.config.js')) || fs.existsSync(path.join(process.cwd(), 'next.config.ts'))) {
+    if ((fs.existsSync(path.join(process.cwd(), 'pages')) &&
+        fs.existsSync(path.join(process.cwd(), 'next.config.js'))) ||
+        fs.existsSync(path.join(process.cwd(), 'next.config.ts'))) {
         return 'nextjs';
     }
     // Vérifier pour React (peut être amélioré en vérifiant les dépendances dans package.json)
-    if (fs.existsSync(path.join(process.cwd(), 'src', 'index.js')) || fs.existsSync(path.join(process.cwd(), 'src', 'App.js')) || fs.existsSync(path.join(process.cwd(), 'src', 'index.tsx')) || fs.existsSync(path.join(process.cwd(), 'src', 'App.tsx'))) {
+    if (fs.existsSync(path.join(process.cwd(), 'src', 'index.js')) ||
+        fs.existsSync(path.join(process.cwd(), 'src', 'App.js')) ||
+        fs.existsSync(path.join(process.cwd(), 'src', 'index.tsx')) ||
+        fs.existsSync(path.join(process.cwd(), 'src', 'App.tsx'))) {
         return 'react';
     }
     // Vérifier pour Vue
-    if (fs.existsSync(path.join(process.cwd(), 'vue.config.js')) || fs.existsSync(path.join(process.cwd(), 'vue.config.ts'))) {
+    if (fs.existsSync(path.join(process.cwd(), 'vue.config.js')) ||
+        fs.existsSync(path.join(process.cwd(), 'vue.config.ts'))) {
         return 'vue';
     }
     // Vérifier pour Nuxt.js
-    if (fs.existsSync(path.join(process.cwd(), 'nuxt.config.js')) || fs.existsSync(path.join(process.cwd(), 'nuxt.config.ts'))) {
+    if (fs.existsSync(path.join(process.cwd(), 'nuxt.config.js')) ||
+        fs.existsSync(path.join(process.cwd(), 'nuxt.config.ts'))) {
         return 'nuxt';
     }
-    return 'unknow';
+    return 'unknown';
 };
 function askTypeScriptOrJavaScript() {
     return inquirer.prompt([
@@ -37,8 +44,8 @@ function askTypeScriptOrJavaScript() {
             type: 'list',
             name: 'languageChoice',
             message: 'Voulez-vous utiliser TypeScript ou JavaScript?',
-            choices: ['TypeScript', 'JavaScript']
-        }
+            choices: ['TypeScript', 'JavaScript'],
+        },
     ]);
 }
 function askLibStyle() {
@@ -47,19 +54,19 @@ function askLibStyle() {
             type: 'list',
             name: 'libStyleChoice',
             message: 'Voulez-vous utiliser styled-components ou css-modules?',
-            choices: ['styled-components', 'css-modules']
-        }
+            choices: ['styled-components', 'css-modules'],
+        },
     ]);
 }
 export const initLib = () => __awaiter(void 0, void 0, void 0, function* () {
     const frameworkValue = detectFramework();
-    writeConfigFile("framework", frameworkValue);
+    writeConfigFile('framework', frameworkValue);
     const language = yield askTypeScriptOrJavaScript();
-    writeConfigFile("language", language.languageChoice);
+    writeConfigFile('language', language.languageChoice);
     const styleLib = yield askLibStyle();
-    writeConfigFile("styleLib", styleLib.libStyleChoice);
-    if (styleLib.libStyleChoice === "styled-components") {
-        installLibrary("styled-components");
+    writeConfigFile('styleLib', styleLib.libStyleChoice);
+    if (styleLib.libStyleChoice === 'styled-components') {
+        installLibrary('styled-components');
     }
     return true;
 });
