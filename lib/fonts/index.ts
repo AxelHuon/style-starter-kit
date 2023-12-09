@@ -70,7 +70,18 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
           let newUrl: string = path.join(fontDirectory, fileName);
           newUrl = "'" + newUrl + fileExtension + "'";
           newUrl = newUrl.replace(/\\/g, '/');
-
+          if (config !== 404 && typeof config === "object" && config !== null) {
+            if (
+              config?.framework === "react" ||
+              config?.framework === "vue" ||
+              config?.framework === "unknown"
+            ) {
+              newUrl = newUrl.substring(0, 1) + "../../" + newUrl.substring(1);
+            } else {
+              newUrl = newUrl.substring(0, 1) + "../" + newUrl.substring(1);
+            }
+          }
+          
           await downloadFontFile(url, fontDirectory, fileName);
           newFontCss = newFontCss.replace(url, newUrl);
           console.log(newFontCss);
