@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "nodemon -L --verbose"
   },
   "type": "module",
   "bin": {
@@ -30,6 +30,7 @@
   "dependencies": {
     "inquirer": "^9.2.11",
     "shelljs": "^0.8.5",
+    "styled-components": "^6.1.1",
     "undici": "^5.27.0"
   }
 }
