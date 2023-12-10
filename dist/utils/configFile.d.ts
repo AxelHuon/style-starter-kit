@@ -1,7 +1,7 @@
 export interface ConfigInterface {
-    language?: string;
-    framework?: string;
-    styleLib?: string;
+    language?: 'TypeScript' | 'JavaScript';
+    framework?: 'react' | 'vue' | 'nuxt' | 'nextjs' | 'unknown';
+    styleLib?: 'css-modules' | 'styled-components';
 }
-export declare const writeConfigFile: (key: string, value: string) => void;
-export declare function loadConfig(): any;
+export declare const writeConfigFile: (key: string, value: string | string[]) => void;
+export declare function loadConfig(): ConfigInterface | number;

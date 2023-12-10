@@ -1,5 +1,6 @@
 {
   "watch": ["lib"],
   "ext": "ts",
-  "exec": "tsc"
+  "exec": "tsc",
+  "legacyWatch": true
 }

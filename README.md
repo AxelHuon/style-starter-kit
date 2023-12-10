@@ -32,13 +32,11 @@ style-starter-kit colors
 ### Use Docker
 
 ```bash
-docker build -t style-starter-kit .
+docker compose up --build
 ```
 
 ```bash
-docker compose up
+docker exec -it style_starter_kit_container /bin/bash 
 ```
 
-```bash
-docker exec -it style-starter-kit /bin/bash
-```
+

@@ -7,24 +7,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import inquirer from "inquirer";
-import fetch from "node-fetch";
-import fs from "fs";
-import path from "path";
-import { createDirectoryIfNeeded } from "../utils/folder.js";
-import { loadConfig } from "../utils/configFile.js";
-const FONTS = [
-    "Roboto",
-    "Open Sans",
-    "Lato",
-];
+import inquirer from 'inquirer';
+import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import { createDirectoryIfNeeded } from '../utils/folder.js';
+import { loadConfig } from '../utils/configFile.js';
+const FONTS = ['Roboto', 'Open Sans', 'Lato'];
 function selectFont() {
     return __awaiter(this, void 0, void 0, function* () {
         const questions = [
             {
-                type: "list",
-                name: "fontFamily",
-                message: "Quelle police souhaitez-vous télécharger?",
+                type: 'list',
+                name: 'fontFamily',
+                message: 'Quelle police souhaitez-vous télécharger?',
                 choices: FONTS,
                 default: FONTS[0],
             },
@@ -57,13 +53,15 @@ function downloadFontFamily(fontFamily) {
                         const weight = weightMatch[1];
                         const style = styleMatch[1];
                         const fileExtension = path.extname(url);
-                        let fontDirectory = "";
-                        if (config !== 404 && typeof config === "object" && config !== null) {
-                            if ((config === null || config === void 0 ? void 0 : config.framework) === "react" || "vue" || "unknow") {
-                                fontDirectory = path.join("./public/fonts", fontFamily);
+                        let fontDirectory = '';
+                        if (config !== 404 && typeof config === 'object' && config !== null) {
+                            if ((config === null || config === void 0 ? void 0 : config.framework) === 'react' ||
+                                (config === null || config === void 0 ? void 0 : config.framework) === 'vue' ||
+                                (config === null || config === void 0 ? void 0 : config.framework) === 'unknown') {
+                                fontDirectory = path.join('./public/fonts', fontFamily);
                             }
                             else {
-                                fontDirectory = path.join("./public/fonts", fontFamily);
+                                fontDirectory = path.join('./public/fonts', fontFamily);
                             }
                         }
                         if (!fs.existsSync(fontDirectory)) {
@@ -72,27 +70,29 @@ function downloadFontFamily(fontFamily) {
                         const fileName = `${fontFamily}_${style}_${weight}`;
                         let newUrl = path.join(fontDirectory, fileName);
                         newUrl = "'" + newUrl + fileExtension + "'";
-                        newUrl = newUrl.replace(/\\/g, "/");
+                        newUrl = newUrl.replace(/\\/g, '/');
                         yield downloadFontFile(url, fontDirectory, fileName);
                         newFontCss = newFontCss.replace(url, newUrl);
                         console.log(newFontCss);
                     }
                 }
-                let fontsCssPath = "";
-                if (config !== 404 && typeof config === "object" && config !== null) {
-                    if ((config === null || config === void 0 ? void 0 : config.framework) === "react" || "vue" || "unknow") {
-                        createDirectoryIfNeeded("src");
-                        createDirectoryIfNeeded("src/styles");
-                        fontsCssPath = "./src/styles/fonts.css";
+                let fontsCssPath = '';
+                if (config !== 404 && typeof config === 'object' && config !== null) {
+                    if ((config === null || config === void 0 ? void 0 : config.framework) === 'react' ||
+                        (config === null || config === void 0 ? void 0 : config.framework) === 'vue' ||
+                        (config === null || config === void 0 ? void 0 : config.framework) === 'unknown') {
+                        createDirectoryIfNeeded('src');
+                        createDirectoryIfNeeded('src/styles');
+                        fontsCssPath = './src/styles/fonts.css';
                     }
                     else {
-                        createDirectoryIfNeeded("./styles");
-                        fontsCssPath = "./styles/fonts.css";
+                        createDirectoryIfNeeded('./styles');
+                        fontsCssPath = './styles/fonts.css';
                     }
                 }
                 fs.access(fontsCssPath, fs.constants.F_OK, (err) => {
                     if (err) {
-                        console.log('Le fichier n\'existe pas. Création en cours...');
+                        console.log("Le fichier n'existe pas. Création en cours...");
                         fs.writeFile(fontsCssPath, newFontCss, (err) => {
                             if (err)
                                 throw err;
@@ -100,18 +100,23 @@ function downloadFontFamily(fontFamily) {
                         });
                     }
                     else {
-                        const existingContent = fs.readFileSync(fontsCssPath, "utf8");
+                        const existingContent = fs.readFileSync(fontsCssPath, 'utf8');
                         fs.writeFileSync(fontsCssPath, newFontCss + existingContent);
                     }
                 });
                 console.log(`La police ${fontFamily} a été téléchargée avec succès.`);
             }
             else {
-                throw new Error("Aucune URL de police trouvée dans le CSS fourni.");
+                throw new Error('Aucune URL de police trouvée dans le CSS fourni.');
             }
         }
         catch (error) {
-            console.error(`Erreur lors du téléchargement de la police ${fontFamily}: ${error.message}`);
+            if (error instanceof Error && error.message) {
+                console.error(`Erreur lors du téléchargement : ${error.message}`);
+            }
+            else {
+                console.error(`Erreur lors du téléchargement`);
+            }
         }
     });
 }
@@ -130,7 +135,12 @@ function downloadFontFile(url, directory, fileName) {
             console.log(`Téléchargement réussi et sauvegardé à ${savePath}`);
         }
         catch (error) {
-            console.error(`Erreur lors du téléchargement du fichier de police : ${error.message}`);
+            if (error instanceof Error && error.message) {
+                console.error(`Erreur lors du téléchargement du fichier de police : ${error.message}`);
+            }
+            else {
+                console.error(`Erreur lors du téléchargement du fichier de police`);
+            }
         }
     });
 }
@@ -145,7 +155,12 @@ export function initializeFontsDownload() {
             }
         }
         catch (error) {
-            console.error(`Erreur lors de l'initialisation : ${error.message}`);
+            if (error instanceof Error && error.message) {
+                console.error(`Erreur lors de l'initialisation : ${error.message}`);
+            }
+            else {
+                console.error(`Erreur lors de l'initialisation`);
+            }
         }
     });
 }
