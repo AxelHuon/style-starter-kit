@@ -15,4 +15,3 @@ else if (args[0] === "fonts" && args.length <= 1) {
 else {
     console.log("command not found");
 }
-console.log("Axel");

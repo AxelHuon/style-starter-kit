@@ -118,6 +118,7 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
   }
 }
 
+
 async function downloadFontFile(url: string, directory: string, fileName: string): Promise<void> {
   console.log(`Téléchargement de ${url} ...`);
   try {
