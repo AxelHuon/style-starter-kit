@@ -13,7 +13,6 @@ const detectFramework = (): string => {
   ) {
     return 'nextjs';
   }
-
   // Vérifier pour React (peut être amélioré en vérifiant les dépendances dans package.json)
   if (
     fs.existsSync(path.join(process.cwd(), 'src', 'index.js')) ||
@@ -23,7 +22,6 @@ const detectFramework = (): string => {
   ) {
     return 'react';
   }
-
   // Vérifier pour Vue
   if (
     fs.existsSync(path.join(process.cwd(), 'vue.config.js')) ||
@@ -77,5 +75,5 @@ export const initLib = async (): Promise<boolean> => {
   if (styleLib.libStyleChoice === 'styled-components') {
     installLibrary('styled-components');
   }
-  return true;
-};
+  return true
+}

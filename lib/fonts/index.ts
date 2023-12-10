@@ -16,6 +16,7 @@ async function selectFont(): Promise<string> {
       choices: FONTS,
       default: FONTS[0],
     },
+
   ];
   const answers = await inquirer.prompt(questions);
   return answers.fontFamily;
