@@ -16,6 +16,7 @@ async function selectFont(): Promise<string> {
       choices: FONTS,
       default: FONTS[0],
     },
+
   ];
   const answers = await inquirer.prompt(questions);
   return answers.fontFamily;
@@ -116,6 +117,7 @@ async function downloadFontFamily(fontFamily: string): Promise<void> {
     }
   }
 }
+
 
 async function downloadFontFile(url: string, directory: string, fileName: string): Promise<void> {
   console.log(`Téléchargement de ${url} ...`);
