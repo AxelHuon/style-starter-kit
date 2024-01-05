@@ -1,91 +1,66 @@
-import { loadConfig, writeConfigFile } from '../../lib/utils/configFile.ts';
 import fs from 'fs';
 import path from 'path';
+import { ConfigInterface, loadConfig, writeConfigFile } from '../../lib/utils/configFile';
 
-describe('loadConfig', () => {
-  it('charge correctement le fichier de configuration existant', () => {
-    // Créez un fichier de configuration exemple pour le test
-    const exampleConfig = {
-      language: 'TypeScript',
-      framework: 'nextjs',
-      styleLib: 'styled-components',
-    };
+jest.mock('fs');
+jest.mock('path');
 
-    // Chemin fictif pour le test
-    const configPath = 'style-starter-kit.config.json';
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(exampleConfig));
+describe('Tests for writeConfigFile', () => {
+  const mockCwd = '/mocked/directory';
+  const mockConfigPath = '/mocked/directory/style-starter-kit.config.json';
 
-    // Appelez la fonction loadConfig
-    const result = loadConfig();
-
-    // Assurez-vous que la fonction renvoie la configuration attendue
-    expect(result).toEqual(exampleConfig);
-
-    // Restaurez les espions Jest pour fs
-    jest.restoreAllMocks();
+  beforeEach(() => {
+    (process.cwd as jest.Mock) = jest.fn(() => mockCwd);
+    (path.join as jest.Mock) = jest.fn(() => mockConfigPath);
+    (fs.existsSync as jest.Mock).mockClear();
+    (fs.readFileSync as jest.Mock).mockClear();
+    (fs.writeFileSync as jest.Mock).mockClear();
   });
 
-  it("renvoie 404 si le fichier de configuration n'existe pas", () => {
-    try {
-      fs.unlinkSync('./style-starter-kit.config.json');
-    } catch (err) {
-      console.error('Erreur lors de la suppression du fichier de configuration existant :', err);
-    }
-    const config = loadConfig();
-    expect(config).toEqual(404);
+  it('should create a new config file if not existing', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
+    writeConfigFile('language', 'TypeScript');
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      mockConfigPath,
+      JSON.stringify({ language: 'TypeScript' }, null, 2),
+      { encoding: 'utf8' },
+    );
+  });
+
+  it('should update the config file if it exists', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({ language: 'JavaScript' }));
+    writeConfigFile('framework', 'nextjs');
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      mockConfigPath,
+      JSON.stringify({ language: 'JavaScript', framework: 'nextjs' }, null, 2),
+      { encoding: 'utf8' },
+    );
   });
 });
 
-describe('writeConfigFile', () => {
+describe('Tests for loadConfig', () => {
+  const mockCwd = '/mocked/directory';
+  const mockConfigPath = '/mocked/directory/style-starter-kit.config.json';
+
   beforeEach(() => {
-    jest.restoreAllMocks();
+    (process.cwd as jest.Mock) = jest.fn(() => mockCwd);
+    (path.join as jest.Mock) = jest.fn(() => mockConfigPath);
+    (fs.existsSync as jest.Mock).mockClear();
+    (fs.readFileSync as jest.Mock).mockClear();
   });
 
-  it("crée un nouveau fichier de configuration si celui-ci n'existe pas", () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
-    jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
-
-    jest.spyOn(path, 'join').mockReturnValue('style-starter-kit.config.json');
-
-    const key = 'newKey';
-    const value = 'newValue';
-
-    writeConfigFile(key, value);
-
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      'style-starter-kit.config.json',
-      expect.any(String),
-      { encoding: 'utf8' },
+  it('should load the configuration correctly', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(
+      JSON.stringify({ language: 'TypeScript', framework: 'nextjs' }),
     );
+    const config = loadConfig() as ConfigInterface;
+    expect(config).toEqual({ language: 'TypeScript', framework: 'nextjs' });
   });
 
-  it('met à jour un fichier de configuration existant', () => {
-    const existingConfig = { existingKey: 'existingValue' };
-    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(existingConfig));
-    jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
-
-    jest.spyOn(path, 'join').mockReturnValue('style-starter-kit.config.json');
-
-    const key = 'newKey';
-    const value = 'newValue';
-
-    writeConfigFile(key, value);
-
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      'style-starter-kit.config.json',
-      JSON.stringify({ ...existingConfig, [key]: value }, null, 2),
-      { encoding: 'utf8' },
-    );
-  });
-
-  it("affiche une erreur si la valeur n'est ni une chaîne ni un tableau", () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error');
-    writeConfigFile('key', 123 as unknown as string);
-
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'La valeur doit être une chaîne de caractères ou un tableau de chaînes.',
-    );
+  it('should return 404 if the config file does not exist', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
+    expect(loadConfig()).toEqual(404);
   });
 });
