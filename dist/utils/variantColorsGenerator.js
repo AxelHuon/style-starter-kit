@@ -1,8 +1,8 @@
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return [r, g, b];
 }
-function rgbToHex(r, g, b) {
+export function rgbToHex(r, g, b) {
     const red = r.toString(16).padStart(2, '0'), green = g.toString(16).padStart(2, '0'), blue = b.toString(16).padStart(2, '0');
     return '#' + red + green + blue;
 }

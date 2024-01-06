@@ -1,1 +1,1 @@
-export declare function initializeFontsDownload(): Promise<void>;
+export declare const downloadFontsAndGenereateCSS: () => Promise<void>;
