@@ -46,7 +46,6 @@ export const downloadFontsAndGenereateCSS = async () => {
           );
           if (typeof cssContent === 'string') {
             const addContentCss = addContentToCssFile(cssContent);
-            console.log(addContentCss);
             if (addContentCss) {
               writeConfigFile('fonts', dataFontsJson.fontsData[i].fontsVariant, 'appendToArray');
             }

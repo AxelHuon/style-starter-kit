@@ -111,7 +111,6 @@ export const genereateCSSContent = (filePath, fontsData, fontName) => {
     }
 };
 export const addContentToCssFile = (content) => {
-    console.log("ici");
     const config = loadConfig();
     let dirCss = '';
     if (typeof config === 'object') {

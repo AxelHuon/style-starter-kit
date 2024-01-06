@@ -36,7 +36,6 @@ export const downloadFontsAndGenereateCSS = () => __awaiter(void 0, void 0, void
                     const cssContent = genereateCSSContent(responseDownload, dataFontsJson.fontsData[i], fontName);
                     if (typeof cssContent === 'string') {
                         const addContentCss = addContentToCssFile(cssContent);
-                        console.log(addContentCss);
                         if (addContentCss) {
                             writeConfigFile('fonts', dataFontsJson.fontsData[i].fontsVariant, 'appendToArray');
                         }

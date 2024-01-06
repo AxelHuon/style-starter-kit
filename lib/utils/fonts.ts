@@ -140,7 +140,6 @@ export const genereateCSSContent = (
 };
 
 export const addContentToCssFile = (content: string): boolean => {
-  console.log("ici");
   const config = loadConfig();
   let dirCss: string = '';
   if (typeof config === 'object') {
