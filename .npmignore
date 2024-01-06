@@ -8,3 +8,4 @@ nodemon.json
 docker-compose.yml
 start.sh
 style-starter-kit.config.json
+__test__
