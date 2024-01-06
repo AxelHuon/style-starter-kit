@@ -138,7 +138,7 @@ async function downloadFontFile(url: string, directory: string, fileName: string
     const buffer: Buffer = await response.buffer();
 
     const fileExtension: string = path.extname(url);
-    const savePath: string = path.join(directory, `${fileName}_family${fileExtension}`);
+    const savePath: string = path.join(directory, `${fileName}${fileExtension}`);
 
     fs.writeFileSync(savePath, buffer);
     console.log(`Téléchargement réussi et sauvegardé à ${savePath}`);
