@@ -1,1 +1,1 @@
-export declare const createDirectoryIfNeeded: (path: string) => void;
+export declare const createDirectoryIfNeeded: (path: string) => boolean;
