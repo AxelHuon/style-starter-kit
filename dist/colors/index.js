@@ -159,6 +159,6 @@ function generateTSFile(answers, language) {
     }
     colorVariablesTS += '};\n';
     createDirectoryIfNeeded(process.cwd() + `${dir}/theme`);
-    const outputPath = language === 'TypeScript' ? `${dir}/theme/Colors.ts` : '/theme/Colors.js';
+    const outputPath = language === 'TypeScript' ? `${dir}/theme/Colors.ts` : `${dir}/theme/Colors.js`;
     shell.ShellString(colorVariablesTS).to(process.cwd() + outputPath);
 }
