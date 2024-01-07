@@ -94,7 +94,19 @@ function processAnswers(answers: Answers, config: any) {
 
 function generateCSSFile(answers: Answers) {
   let colorVariablesCSS = ':root {\n';
-
+  const config = loadConfig();
+  let dir = '';
+  if (typeof config === 'object') {
+    if (
+      config.framework === 'react' ||
+      config.framework === 'vue' ||
+      config.framework === 'unknown'
+    ) {
+      dir = '/src';
+    } else if (config.framework === 'nextjs' || config.framework === 'nuxt') {
+      dir = '';
+    }
+  }
   if (answers.configureColors) {
     colorVariablesCSS += `  --primary-color: ${answers.primaryColor};\n`;
     if (answers.wantSecondaryColor) {
@@ -122,13 +134,25 @@ function generateCSSFile(answers: Answers) {
   }
 
   colorVariablesCSS += '}\n';
-  createDirectoryIfNeeded(process.cwd() + '/style');
-  shell.ShellString(colorVariablesCSS).to(process.cwd() + '/style/colors.css');
+  createDirectoryIfNeeded(process.cwd() + `${dir}/styles`);
+  shell.ShellString(colorVariablesCSS).to(process.cwd() + `${dir}/styles/colors.css`);
 }
 
 function generateTSFile(answers: Answers, language: string) {
   let colorVariablesTS = 'export const Colors = {\n';
-
+  const config = loadConfig();
+  let dir = '';
+  if (typeof config === 'object') {
+    if (
+      config.framework === 'react' ||
+      config.framework === 'vue' ||
+      config.framework === 'unknown'
+    ) {
+      dir = '/src';
+    } else if (config.framework === 'nextjs' || config.framework === 'nuxt') {
+      dir = '';
+    }
+  }
   if (answers.configureColors) {
     colorVariablesTS += `  PRIMARY: "${answers.primaryColor}",\n`;
     if (answers.wantSecondaryColor) {
@@ -156,7 +180,7 @@ function generateTSFile(answers: Answers, language: string) {
   }
 
   colorVariablesTS += '};\n';
-  createDirectoryIfNeeded(process.cwd() + '/theme');
-  const outputPath = language === 'TypeScript' ? '/theme/Colors.ts' : '/theme/Colors.js';
+  createDirectoryIfNeeded(process.cwd() + `${dir}/theme`);
+  const outputPath = language === 'TypeScript' ? `${dir}/theme/Colors.ts` : '/theme/Colors.js';
   shell.ShellString(colorVariablesTS).to(process.cwd() + outputPath);
 }
