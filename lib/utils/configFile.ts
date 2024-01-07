@@ -71,3 +71,4 @@ export function loadConfig(): ConfigInterface | number {
     return 404;
   }
 }
+

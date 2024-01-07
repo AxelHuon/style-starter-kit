@@ -6,6 +6,7 @@ lib/Atoms
 lib/Molecules
 lib/theme
 lib/colors.css
+styles
 style
 theme
 public
