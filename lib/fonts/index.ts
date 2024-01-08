@@ -8,11 +8,9 @@ import {
 } from '../utils/fonts.js';
 import { loadConfig, writeConfigFile } from '../utils/configFile.js';
 
-
 export const downloadFontsAndGenereateCSS = async () => {
   const config = loadConfig();
   const fontPrompt = await selectFont();
-
   const { cssText, fontName, error } = await getGooglFontsData(fontPrompt);
   let dataFontsJson;
   if (!error && cssText && fontName) {
@@ -70,4 +68,3 @@ async function selectFont(): Promise<string> {
   const answers = await inquirer.prompt(questions);
   return answers.fontFamily;
 }
-
