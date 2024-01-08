@@ -76,89 +76,108 @@ function validateHexColor(value) {
     return valid || 'Please enter a valid hexadecimal color (e.g., #FFFFFF)';
 }
 function processAnswers(answers, config) {
-    if (answers.generateCSS) {
-        generateCSSFile(answers);
-    }
-    if (answers.generateTSFile) {
-        generateTSFile(answers, config.language);
+    if (answers.configureColors) {
+        if (answers.generateCSS) {
+            generateCSSFile(answers);
+        }
+        if (answers.generateTSFile) {
+            generateTSFile(answers, config.language);
+        }
     }
 }
 function generateCSSFile(answers) {
-    let colorVariablesCSS = ':root {\n';
+    let content = ':root {\n';
     const config = loadConfig();
     let dir = '';
     if (typeof config === 'object') {
         if (config.framework === 'react' ||
             config.framework === 'vue' ||
             config.framework === 'unknown') {
-            dir = '/src';
+            dir = '/src/styles';
         }
         else if (config.framework === 'nextjs' || config.framework === 'nuxt') {
-            dir = '';
+            dir = '/styles';
         }
     }
-    if (answers.configureColors) {
-        colorVariablesCSS += `  --primary-color: ${answers.primaryColor};\n`;
-        if (answers.wantSecondaryColor) {
-            colorVariablesCSS += `  --secondary-color: ${answers.secondaryColor};\n`;
+    content += `  --primary-color: ${answers.primaryColor};\n`;
+    if (answers.secondaryColor) {
+        content += `  --secondary-color: ${answers.secondaryColor};\n`;
+    }
+    if (answers.blackAndWhite) {
+        content += `  --black: #000;\n  --white: #fff;\n`;
+    }
+    if (answers.variantColor) {
+        if (answers.primaryColor) {
+            const variantPrimary = generateColorVariants(answers.primaryColor, 'primary', 'css');
+            Object.keys(variantPrimary).forEach((key) => {
+                content += `  ${key}: "${variantPrimary[key]}";\n`;
+            });
+        }
+        if (answers.secondaryColor) {
+            const variantSecondary = generateColorVariants(answers.secondaryColor, 'secondary', 'css');
+            Object.keys(variantSecondary).forEach((key) => {
+                content += `  ${key}: "${variantSecondary[key]}";\n`;
+            });
         }
         if (answers.blackAndWhite) {
-            colorVariablesCSS += `  --black: #000;\n  --white: #fff;\n`;
-        }
-        if (answers.variantColor) {
-            const variantColorPrimaryCSS = generateColorVariants(answers.primaryColor, 'primary', 'css');
-            Object.keys(variantColorPrimaryCSS).forEach((key) => {
-                colorVariablesCSS += `  ${key}: ${variantColorPrimaryCSS[key]};\n`;
+            const variantBlack = generateColorVariants('#000000', 'gray', 'css');
+            Object.keys(variantBlack).forEach((key) => {
+                content += `  ${key}: "${variantBlack[key]}";\n`;
             });
-            if (answers.wantSecondaryColor) {
-                const variantColorSecondaryCSS = generateColorVariants(answers.secondaryColor, 'secondary', 'css');
-                Object.keys(variantColorSecondaryCSS).forEach((key) => {
-                    colorVariablesCSS += `  ${key}: ${variantColorSecondaryCSS[key]};\n`;
-                });
-            }
         }
     }
-    colorVariablesCSS += '}\n';
-    createDirectoryIfNeeded(process.cwd() + `${dir}/styles`);
-    shell.ShellString(colorVariablesCSS).to(process.cwd() + `${dir}/styles/colors.css`);
+    content += '}\n';
+    createDirectoryIfNeeded(process.cwd() + `${dir}`);
+    shell.ShellString(content).to(process.cwd() + `${dir}/colors.css`);
 }
 function generateTSFile(answers, language) {
-    let colorVariablesTS = 'export const Colors = {\n';
+    let content = 'export const Colors = {\n';
     const config = loadConfig();
     let dir = '';
     if (typeof config === 'object') {
         if (config.framework === 'react' ||
             config.framework === 'vue' ||
             config.framework === 'unknown') {
-            dir = '/src';
+            dir = '/src/theme';
         }
         else if (config.framework === 'nextjs' || config.framework === 'nuxt') {
-            dir = '';
+            dir = '/theme';
         }
     }
-    if (answers.configureColors) {
-        colorVariablesTS += `  PRIMARY: "${answers.primaryColor}",\n`;
-        if (answers.wantSecondaryColor) {
-            colorVariablesTS += `  SECONDARY: "${answers.secondaryColor}",\n`;
+    /*primary color generation*/
+    if (answers.primaryColor) {
+        content += `  PRIMARY: "${answers.primaryColor}",\n`;
+    }
+    /*secondary color generation*/
+    if (answers.secondaryColor) {
+        content += `  SECONDARY: "${answers.secondaryColor}",\n`;
+    }
+    /*black and white color generation*/
+    if (answers.blackAndWhite) {
+        content += `  BLACK: "#000",\n  WHITE: "#fff",\n`;
+    }
+    if (answers.variantColor) {
+        if (answers.primaryColor) {
+            const variantPrimary = generateColorVariants(answers.primaryColor, 'primary', 'ts');
+            Object.keys(variantPrimary).forEach((key) => {
+                content += `  ${key}: "${variantPrimary[key]}",\n`;
+            });
+        }
+        if (answers.secondaryColor) {
+            const variantSecondary = generateColorVariants(answers.secondaryColor, 'secondary', 'ts');
+            Object.keys(variantSecondary).forEach((key) => {
+                content += `  ${key}: "${variantSecondary[key]}",\n`;
+            });
         }
         if (answers.blackAndWhite) {
-            colorVariablesTS += `  BLACK: "#000",\n  WHITE: "#fff",\n`;
-        }
-        if (answers.variantColor) {
-            const variantColorPrimaryTS = generateColorVariants(answers.primaryColor, 'primary', 'ts');
-            Object.keys(variantColorPrimaryTS).forEach((key) => {
-                colorVariablesTS += `  ${key}: "${variantColorPrimaryTS[key]}",\n`;
+            const variantBlack = generateColorVariants('#000000', 'gray', 'ts');
+            Object.keys(variantBlack).forEach((key) => {
+                content += `  ${key}: "${variantBlack[key]}",\n`;
             });
-            if (answers.wantSecondaryColor) {
-                const variantColorSecondaryTS = generateColorVariants(answers.secondaryColor, 'secondary', 'ts');
-                Object.keys(variantColorSecondaryTS).forEach((key) => {
-                    colorVariablesTS += `  ${key}: "${variantColorSecondaryTS[key]}",\n`;
-                });
-            }
         }
     }
-    colorVariablesTS += '};\n';
-    createDirectoryIfNeeded(process.cwd() + `${dir}/theme`);
-    const outputPath = language === 'TypeScript' ? `${dir}/theme/Colors.ts` : `${dir}/theme/Colors.js`;
-    shell.ShellString(colorVariablesTS).to(process.cwd() + outputPath);
+    content += '};\n';
+    createDirectoryIfNeeded(process.cwd() + `${dir}`);
+    const outputPath = language === 'TypeScript' ? `${dir}/Colors.ts` : `${dir}/theme/Colors.js`;
+    shell.ShellString(content).to(process.cwd() + outputPath);
 }

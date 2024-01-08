@@ -3,9 +3,9 @@ import path from 'path';
 import * as process from 'process';
 
 export interface ConfigInterface {
-  language?: 'TypeScript' | 'JavaScript';
-  framework?: 'react' | 'vue' | 'nuxt' | 'nextjs' | 'unknown';
-  styleLib?: 'css-modules' | 'styled-components';
+  language: 'TypeScript' | 'JavaScript';
+  framework: 'react' | 'vue' | 'nuxt' | 'nextjs' | 'unknown';
+  styleLib: 'css-modules' | 'styled-components';
   fonts?: string | string[];
 }
 type WriteMode = 'replace' | 'appendToArray';
@@ -71,4 +71,3 @@ export function loadConfig(): ConfigInterface | number {
     return 404;
   }
 }
-
