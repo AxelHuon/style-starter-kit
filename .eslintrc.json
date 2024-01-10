@@ -15,6 +15,12 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "overrides": [
+        {
+            "files": ["lib/**/*"]
+        }
+    ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }

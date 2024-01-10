@@ -20,22 +20,15 @@ export const initialisationColors = async () => {
   if (config !== 404 && typeof config === 'object' && config !== null) {
     const questions = [
       {
-        type: 'confirm',
-        name: 'configureColors',
-        message: 'Do you want to configure color variables?',
-      },
-      {
         type: 'input',
         name: 'primaryColor',
         message: 'Enter your primary color:',
         validate: validateHexColor,
-        when: (answers: Answers) => answers.configureColors,
       },
       {
         type: 'confirm',
         name: 'wantSecondaryColor',
         message: 'Do you want a secondary color?',
-        when: (answers: Answers) => answers.configureColors,
       },
       {
         type: 'input',
@@ -48,25 +41,21 @@ export const initialisationColors = async () => {
         type: 'confirm',
         name: 'blackAndWhite',
         message: 'Do you want black and white color variables?',
-        when: (answers: Answers) => answers.configureColors,
       },
       {
         type: 'confirm',
         name: 'variantColor',
         message: 'Do you want color variants from darkest to lightest?',
-        when: (answers: Answers) => answers.configureColors,
       },
       {
         type: 'confirm',
         name: 'generateCSS',
         message: 'Do you want to generate a CSS file with the colors?',
-        when: (answers: Answers) => answers.configureColors,
       },
       {
         type: 'confirm',
         name: 'generateTSFile',
         message: 'Do you want to generate a colors.js/ts file?',
-        when: (answers: Answers) => answers.configureColors,
       },
     ];
 
@@ -82,13 +71,11 @@ function validateHexColor(value: string): boolean | string {
 }
 
 function processAnswers(answers: Answers, config: ConfigInterface) {
-  if (answers.configureColors) {
-    if (answers.generateCSS) {
-      generateCSSFile(answers);
-    }
-    if (answers.generateTSFile) {
-      generateTSFile(answers, config.language);
-    }
+  if (answers.generateCSS) {
+    generateCSSFile(answers);
+  }
+  if (answers.generateTSFile) {
+    generateTSFile(answers, config.language);
   }
 }
 
@@ -107,7 +94,6 @@ function generateCSSFile(answers: Answers) {
       dir = '/styles';
     }
   }
-
   content += `  --primary-color: ${answers.primaryColor};\n`;
   if (answers.secondaryColor) {
     content += `  --secondary-color: ${answers.secondaryColor};\n`;
