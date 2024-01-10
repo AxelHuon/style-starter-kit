@@ -17,22 +17,15 @@ export const initialisationColors = () => __awaiter(void 0, void 0, void 0, func
     if (config !== 404 && typeof config === 'object' && config !== null) {
         const questions = [
             {
-                type: 'confirm',
-                name: 'configureColors',
-                message: 'Do you want to configure color variables?',
-            },
-            {
                 type: 'input',
                 name: 'primaryColor',
                 message: 'Enter your primary color:',
                 validate: validateHexColor,
-                when: (answers) => answers.configureColors,
             },
             {
                 type: 'confirm',
                 name: 'wantSecondaryColor',
                 message: 'Do you want a secondary color?',
-                when: (answers) => answers.configureColors,
             },
             {
                 type: 'input',
@@ -45,25 +38,21 @@ export const initialisationColors = () => __awaiter(void 0, void 0, void 0, func
                 type: 'confirm',
                 name: 'blackAndWhite',
                 message: 'Do you want black and white color variables?',
-                when: (answers) => answers.configureColors,
             },
             {
                 type: 'confirm',
                 name: 'variantColor',
                 message: 'Do you want color variants from darkest to lightest?',
-                when: (answers) => answers.configureColors,
             },
             {
                 type: 'confirm',
                 name: 'generateCSS',
                 message: 'Do you want to generate a CSS file with the colors?',
-                when: (answers) => answers.configureColors,
             },
             {
                 type: 'confirm',
                 name: 'generateTSFile',
                 message: 'Do you want to generate a colors.js/ts file?',
-                when: (answers) => answers.configureColors,
             },
         ];
         inquirer.prompt(questions).then((answers) => {
@@ -76,13 +65,11 @@ function validateHexColor(value) {
     return valid || 'Please enter a valid hexadecimal color (e.g., #FFFFFF)';
 }
 function processAnswers(answers, config) {
-    if (answers.configureColors) {
-        if (answers.generateCSS) {
-            generateCSSFile(answers);
-        }
-        if (answers.generateTSFile) {
-            generateTSFile(answers, config.language);
-        }
+    if (answers.generateCSS) {
+        generateCSSFile(answers);
+    }
+    if (answers.generateTSFile) {
+        generateTSFile(answers, config.language);
     }
 }
 function generateCSSFile(answers) {

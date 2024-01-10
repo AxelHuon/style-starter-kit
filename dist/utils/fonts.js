@@ -87,7 +87,12 @@ export const downloadFont = (url, fontsVariant) => __awaiter(void 0, void 0, voi
         return false;
     }
     catch (error) {
-        console.error(`Error in downloadFont function: ${error.message}`);
+        if (error.message) {
+            console.error(`Error in downloadFont function: ${error.message}`);
+        }
+        else {
+            console.error(`Error in downloadFont function`);
+        }
         return false;
     }
 });
