@@ -48,6 +48,9 @@
       "eslint --fix ",
       "git add"
     ],
+    "__tests__/*.{js,jsx,ts,tsx}": [
+      "npm test -- --findRelatedTests"
+    ],
     "lib/**/*": "prettier --write"
   }
 }
