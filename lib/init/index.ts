@@ -45,7 +45,7 @@ function askTypeScriptOrJavaScript(): Promise<{ languageChoice: string }> {
     {
       type: 'list',
       name: 'languageChoice',
-      message: 'Voulez-vous utiliser TypeScript ou JavaScript?',
+      message: 'Would you like to use TypeScript or JavaScript ?',
       choices: ['TypeScript', 'JavaScript'],
     },
   ]);
@@ -56,7 +56,7 @@ function askLibStyle(): Promise<{ libStyleChoice: string }> {
     {
       type: 'list',
       name: 'libStyleChoice',
-      message: 'Voulez-vous utiliser styled-components ou css-modules?',
+      message: 'Would you like to use styled-components or css-modules ?',
       choices: ['styled-components', 'css-modules'],
     },
   ]);
@@ -75,5 +75,5 @@ export const initLib = async (): Promise<boolean> => {
   if (styleLib.libStyleChoice === 'styled-components') {
     installLibrary('styled-components');
   }
-  return true
-}
+  return true;
+};
