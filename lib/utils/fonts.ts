@@ -110,7 +110,11 @@ export const downloadFont = async (
     }
     return false;
   } catch (error: any) {
-    console.error(`Error in downloadFont function: ${error.message}`);
+    if (error.message) {
+      console.error(`Error in downloadFont function: ${error.message}`);
+    } else {
+      console.error(`Error in downloadFont function`);
+    }
     return false;
   }
 };

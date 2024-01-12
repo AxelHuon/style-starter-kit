@@ -12,3 +12,4 @@ __test__
 .eslintrc.json
 .prettierrc.json
 jest.config.ts
+.eslintignore
