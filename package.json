@@ -44,12 +44,12 @@
     "undici": "^5.27.0"
   },
   "lint-staged": {
+    "*test.ts": [
+      "npm run test"
+    ],
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix ",
       "git add"
-    ],
-    "*test.ts": [
-      "npm test -- --findRelatedTests"
     ],
     "lib/**/*": "prettier --write"
   }
