@@ -10,7 +10,7 @@ export const writeConfigFile = (key, value, writeMode = 'replace') => {
     }
     else {
         configObject = {};
-        console.log('Le fichier de configuration a été créé.');
+        console.log('The configuration file has been created');
     }
     const updateConfig = (newValue) => {
         if (writeMode === 'replace') {

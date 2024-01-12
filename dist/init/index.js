@@ -43,7 +43,7 @@ function askTypeScriptOrJavaScript() {
         {
             type: 'list',
             name: 'languageChoice',
-            message: 'Voulez-vous utiliser TypeScript ou JavaScript?',
+            message: 'Would you like to use TypeScript or JavaScript ?',
             choices: ['TypeScript', 'JavaScript'],
         },
     ]);
@@ -53,7 +53,7 @@ function askLibStyle() {
         {
             type: 'list',
             name: 'libStyleChoice',
-            message: 'Voulez-vous utiliser styled-components ou css-modules?',
+            message: 'Would you like to use styled-components or css-modules ?',
             choices: ['styled-components', 'css-modules'],
         },
     ]);

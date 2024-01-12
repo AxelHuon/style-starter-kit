@@ -4,9 +4,9 @@ export const installLibrary = (libraryName) => {
     const packageManager = fs.existsSync('yarn.lock') ? 'yarn add' : 'npm install';
     exec(`${packageManager} ${libraryName}`, (error, stdout) => {
         if (error) {
-            console.error(`Erreur lors de l'installation de ${libraryName}: ${error.message}`);
+            console.error(`Error during the installation of ${libraryName}: ${error.message}`);
             return;
         }
-        console.log(`Installation réussie de ${libraryName} avec ${packageManager}: ${stdout}`);
+        console.log(`Successful installation of ${libraryName} with ${packageManager}: ${stdout}`);
     });
 };
