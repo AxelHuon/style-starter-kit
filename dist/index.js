@@ -12,6 +12,10 @@ else if (args[0] === 'colors' && args.length <= 1) {
 else if (args[0] === 'fonts' && args.length <= 1) {
     downloadFontsAndGenereateCSS();
 }
+else if (args[0] === 'text' && args.length <= 1) {
+    console.log('incomming');
+}
 else {
-    console.log('command not found');
+    const url = 'https://style-starter-kit.vercel.app/';
+    console.log('Command not found, check the documentation for help' + url);
 }
