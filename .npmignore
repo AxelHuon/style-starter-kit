@@ -13,3 +13,4 @@ __test__
 .prettierrc.json
 jest.config.ts
 .eslintignore
+.husky
