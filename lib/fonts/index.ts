@@ -60,7 +60,7 @@ async function selectFont(): Promise<string> {
     {
       type: 'list',
       name: 'fontFamily',
-      message: 'Quelle police souhaitez-vous télécharger?',
+      message: 'Which font would you like to download ?',
       choices: FONTS,
       default: FONTS[0],
     },

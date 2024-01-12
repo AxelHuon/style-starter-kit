@@ -23,7 +23,7 @@ export const writeConfigFile = (
     configObject = JSON.parse(configContent);
   } else {
     configObject = {};
-    console.log('Le fichier de configuration a été créé.');
+    console.log('The configuration file has been created');
   }
 
   const updateConfig = (newValue: string) => {
