@@ -13,7 +13,7 @@ if (args[0] === 'init' && args.length <= 1) {
 } else if (args[0] === 'fonts' && args.length <= 1) {
   downloadFontsAndGenereateCSS();
 } else if (args[0] === 'text' && args.length <= 1) {
-  console.log('dsqddq');
+  console.log('incomming');
 } else {
   const url: string = 'https://style-starter-kit.vercel.app/';
   console.log('Command not found, check the documentation for help' + url);
