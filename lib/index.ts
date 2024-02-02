@@ -16,5 +16,5 @@ if (args[0] === 'init' && args.length <= 1) {
   console.log('incomming');
 } else {
   const url: string = 'https://style-starter-kit.vercel.app/';
-  console.log('Command not found, check the documentation for help' + url);
+  console.log('Command not found, check the documentation for help ' + url);
 }

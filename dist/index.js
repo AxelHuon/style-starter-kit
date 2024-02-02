@@ -17,5 +17,5 @@ else if (args[0] === 'text' && args.length <= 1) {
 }
 else {
     const url = 'https://style-starter-kit.vercel.app/';
-    console.log('Command not found, check the documentation for help' + url);
+    console.log('Command not found, check the documentation for help ' + url);
 }
