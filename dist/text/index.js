@@ -64,7 +64,6 @@ const getDataPromptUser = () => __awaiter(void 0, void 0, void 0, function* () {
         addTextStyle(data, pathFileStyle);
     }
 });
-getDataPromptUser();
 function addTextStyle(data, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -84,3 +83,4 @@ function addTextStyle(data, filePath) {
         }
     });
 }
+getDataPromptUser();

@@ -83,7 +83,6 @@ const getDataPromptUser = async () => {
     addTextStyle(data, pathFileStyle);
   }
 };
-getDataPromptUser();
 
 async function addTextStyle(data: DataPrompt, filePath: string) {
   try {
@@ -102,3 +101,5 @@ async function addTextStyle(data: DataPrompt, filePath: string) {
     console.error('Failed to add style:', error);
   }
 }
+
+getDataPromptUser();
