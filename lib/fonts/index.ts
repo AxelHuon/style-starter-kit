@@ -7,6 +7,7 @@ import {
   parseFontsIntoJson,
 } from '../utils/fonts.js';
 import { loadConfig, writeConfigFile } from '../utils/configFile.js';
+import { QuestionCollection } from 'inquirer';
 
 export const downloadFontsAndGenereateCSS = async () => {
   const config = loadConfig();
@@ -54,17 +55,48 @@ export const downloadFontsAndGenereateCSS = async () => {
   }
 };
 
-const FONTS: string[] = ['Roboto', 'Open Sans', 'Lato', 'Montserrat'];
+const FONTS: string[] = ['Roboto', 'Open Sans', 'Lato', 'Add Custom Font'];
+
+interface FontSelection {
+  fontFamily: string;
+  customUrl?: string;
+}
+
 async function selectFont(): Promise<string> {
-  const questions = [
+  const FONT_BASE_URL = 'https://fonts.google.com/specimen/';
+  const questions: QuestionCollection<FontSelection> = [
     {
       type: 'list',
       name: 'fontFamily',
-      message: 'Which font would you like to download ?',
+      message: 'Which font would you like to download?',
       choices: FONTS,
       default: FONTS[0],
     },
+    {
+      type: 'input',
+      name: 'customUrl',
+      message: 'Enter the Google Fonts URL: (e.g. https://fonts.google.com/specimen/your-font)',
+      when: (answers: FontSelection) => answers.fontFamily === 'Add Custom Font',
+      validate: (inputUrl: string): boolean | string => {
+        if (!inputUrl.startsWith(FONT_BASE_URL)) {
+          return 'Please enter a valid Google Fonts URL.';
+        }
+        return true;
+      },
+    },
   ];
+
   const answers = await inquirer.prompt(questions);
+  if (answers.fontFamily === 'Add Custom Font') {
+    return extractFontNameFromUrl(answers.customUrl ?? '');
+  }
   return answers.fontFamily;
+}
+
+function extractFontNameFromUrl(url: string): string {
+  const matches = url.match(/https:\/\/fonts\.google\.com\/specimen\/([^?]+)/);
+  if (matches && matches[1]) {
+    return decodeURIComponent(matches[1].replace(/\+/g, ' '));
+  }
+  throw new Error('Invalid URL format');
 }

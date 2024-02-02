@@ -16,7 +16,7 @@
   },
   "include": [
     "lib/**/*.ts"
-  ],
+, "hi.ts"  ],
   "exclude": [
     "node_modules"
   ]

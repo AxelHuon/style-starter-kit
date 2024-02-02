@@ -45,19 +45,43 @@ export const downloadFontsAndGenereateCSS = () => __awaiter(void 0, void 0, void
         }
     }
 });
-const FONTS = ['Roboto', 'Open Sans', 'Lato', 'Montserrat'];
+const FONTS = ['Roboto', 'Open Sans', 'Lato', 'Add Custom Font'];
 function selectFont() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        const FONT_BASE_URL = 'https://fonts.google.com/specimen/';
         const questions = [
             {
                 type: 'list',
                 name: 'fontFamily',
-                message: 'Which font would you like to download ?',
+                message: 'Which font would you like to download?',
                 choices: FONTS,
                 default: FONTS[0],
             },
+            {
+                type: 'input',
+                name: 'customUrl',
+                message: 'Enter the Google Fonts URL:',
+                when: (answers) => answers.fontFamily === 'Add Custom Font',
+                validate: (inputUrl) => {
+                    if (!inputUrl.startsWith(FONT_BASE_URL)) {
+                        return 'Please enter a valid Google Fonts URL.';
+                    }
+                    return true;
+                },
+            },
         ];
         const answers = yield inquirer.prompt(questions);
+        if (answers.fontFamily === 'Add Custom Font') {
+            return extractFontNameFromUrl((_a = answers.customUrl) !== null && _a !== void 0 ? _a : '');
+        }
         return answers.fontFamily;
     });
+}
+function extractFontNameFromUrl(url) {
+    const matches = url.match(/https:\/\/fonts\.google\.com\/specimen\/([^?]+)/);
+    if (matches && matches[1]) {
+        return decodeURIComponent(matches[1].replace(/\+/g, ' '));
+    }
+    throw new Error('Invalid URL format');
 }
